@@ -23,10 +23,13 @@ echo
 cpanm --install Net::DNS@1.22  > /dev/null 2>&1
 echo "[+] Downgrading complete"
 echo
-sed -i 's/^service_bind_address.*/service_bind_address 0.0.0.0/' /etc/inetsim/inetsim.conf > /dev/null 2>&1
+host=$(hostname -I | awk '{print $1}')
+sed -i 's/^#service_bind_address.*/service_bind_address 0.0.0.0/' /etc/inetsim/inetsim.conf > /dev/null 2>&1
+sed -i 's/^#start_service dns/start_service dns/' /etc/inetsim/inetsim.conf > /dev/null 2>&1
+sed -i "s/^#\s*dns_default_ip 10.10.10.1/dns_default_ip $host/" /etc/inetsim/inetsim.conf > /dev/null 2>&1
 echo "[!] Restarting INetSim"
 service inetsim restart 
-check=$(netstat -tupna | grep 53  | grep -i inetsim)
+check=$(netstat -tupna | grep 53 )
 if [[ -z  $check ]] ; then
 echo
 echo "[-] INetSim isn't running. Please check your system configuration."

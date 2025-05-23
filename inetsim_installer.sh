@@ -29,7 +29,7 @@ sed -i 's/^#start_service dns/start_service dns/' /etc/inetsim/inetsim.conf > /d
 sed -i "s/^#\s*dns_default_ip 10.10.10.1/dns_default_ip $host/" /etc/inetsim/inetsim.conf > /dev/null 2>&1
 echo "[!] Restarting INetSim"
 service inetsim restart 
-check=$(netstat -tupna | grep 53 )
+check=$(netstat -tulnp | grep inetsim)
 if [[ -z  $check ]] ; then
 echo
 echo "[-] INetSim isn't running. Please check your system configuration."

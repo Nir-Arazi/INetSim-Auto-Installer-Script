@@ -25,7 +25,7 @@ echo "[+] Downgrading complete"
 echo
 host=$(hostname -I | awk '{print $1}')
 sed -i 's/^#service_bind_address.*/service_bind_address 0.0.0.0/' /etc/inetsim/inetsim.conf > /dev/null 2>&1
-sed -i 's/^#start_service dns/start_service 53/' /etc/inetsim/inetsim.conf > /dev/null 2>&1
+sed -i 's/^#start_service dns/start_service dns/' /etc/inetsim/inetsim.conf > /dev/null 2>&1
 sed -i "s/^#\s*dns_default_ip 10.10.10.1/dns_default_ip $host/" /etc/inetsim/inetsim.conf > /dev/null 2>&1
 echo "[*] Configuring INetSim..."
 echo
